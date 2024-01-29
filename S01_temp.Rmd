@@ -1,0 +1,42 @@
+---
+title: "S01"
+author: "Camilo Ramírez"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r}
+require(readxl)
+
+info_estudiantes <- read_excel("C:/Users/caramirezs/My Drive/PUJ/Esta(6102)/Conjunto de datos/Info_estudiantes.xlsx")
+
+info_df <- data.frame(info_estudiantes)
+```
+
+```{r}
+table(info_df$Carrera)
+```
+
+```{r}
+tabla_salarios <- read.csv("ds_salaries.csv")
+# View(tabla_salarios)
+# convertir a dataframe
+salarios_df <- data.frame(tabla_salarios)
+
+valores = salarios_df$salary_in_usd
+# Definir los puntos de corte para 5 intervalos
+min_val <- min(valores)  # mínimo valor, que es 5132
+max_val <- max(valores)  # máximo valor, que es 450000
+breaks <- seq(from = min_val, to = max_val, length.out = 11)  # 11 puntos de corte para crear 5 intervalos
+
+# Crear los intervalos
+intervalos <- cut(valores, breaks, include.lowest = TRUE, dig.lab = 8)
+
+# Ver los intervalos creados
+table(intervalos)
+
+```
+
+```{r}
+ceiling((324-75)/50)
+```

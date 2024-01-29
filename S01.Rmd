@@ -1,0 +1,43 @@
+---
+title: "S01"
+author: "Camilo Ramírez"
+date: "`r Sys.Date()`"
+output: word_document
+---
+```{r}
+require(readxl)
+tabla_est <- read_excel("Info_estudiantes.xlsx")
+tabla_est_df <- data.frame(tabla_est)
+
+```
+
+```{r}
+table(tabla_est_df$Carrera)
+```
+## Tabla de frecuencias de la variable *carrera*
+|Carrera|Frecuencia|
+|-------|----------|
+|Economía|6|
+|Derecho|5|
+|Sistemas|5| 
+|Matemáticas|5|
+|Administración|2|
+|Electrónica|2|
+|Relaciones|1|
+
+```{r}
+library("RColorBrewer")
+
+barplot(table(tabla_est_df$Carrera), main="Número de estudiantes por carrera", 
+        xlab="Carreras", ylab="Número de estudiantes",
+        cex.names=0.7, cex.lab=0.9, cex.main=0.9, col=rainbow(7), horiz = F)
+```
+```{r}
+pie(table(tabla_est_df$Carrera),col=rainbow(7), border=F,main="Diagrama circular estudiantes",
+    radius=1)
+```
+
+```{r}
+r
+```
+
