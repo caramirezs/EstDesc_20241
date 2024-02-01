@@ -1,0 +1,107 @@
+---
+title: "S02"
+author: "Camilo Ramirez"
+date: "2024-01-29"
+output: word_document
+---
+
+# NY-house-Dataset
+
+```{r}
+archivo_casas <- read.csv("[01] Conjunto de datos/kaggle/NY-House-Dataset.csv")
+NY_House_df <- data.frame(archivo_casas)
+```
+
+```{r}
+tabla_frec_type = table(NY_House_df$TYPE)
+tabla_frec_type
+```
+
+```{r}
+sort_tabla_frec_type <- sort(tabla_frec_type, decreasing = TRUE)
+```
+
+```{r}
+barplot(tabla_frec_type, main="Tipo de viviendas en NY", 
+        xlab="Type", ylab="Número de viviendas", las=2,
+        cex.names=0.7, cex.lab=0.9, cex.main=0.9, col=rainbow(7), horiz = F, 
+        xpd = TRUE)
+
+barplot(sort_tabla_frec_type, main="Tipo de viviendas en NY", 
+        xlab="Type", ylab="Número de viviendas", las=2,
+        cex.names=0.7, cex.lab=0.9, cex.main=0.9, col=rainbow(7), horiz = F, 
+        xpd = TRUE)
+
+pie(tabla_frec_type,col=rainbow(7), border=F,main="Diagrama circular estudiantes",
+    radius=1)
+```
+
+```{r}
+precios <- NY_House_df$PRICE
+min_val <- min(precios)
+max_val <- max(precios)
+rango <- max(precios)- min(precios)
+n_int <- ceiling(1 + log(length(precios), 2))
+n_int
+breaks <- seq(from = min_val, to = max_val, length.out = (n_int+1))
+breaks
+# Crear los intervalos
+intervalos <- cut(precios, breaks, include.lowest = TRUE)
+table(intervalos)
+```
+
+```{r}
+# Encontrar los dos valores máximos en la lista
+max_precios <- tail(sort(precios), 2)
+
+new_precios <- precios[!precios %in% max_precios]
+
+min_val <- min(new_precios)
+max_val <- max(new_precios)
+rango <- max(new_precios)- min(new_precios)
+n_int <- ceiling(1 + log(length(new_precios), 2))
+n_int
+breaks <- seq(from = min_val, to = max_val, length.out = (n_int+1))
+breaks
+# Crear los intervalos
+intervalos <- cut(new_precios, breaks, include.lowest = TRUE)
+table(intervalos)
+```
+
+```{r}
+hist(new_precios, 
+     breaks = breaks,  # Utiliza los mismos intervalos que calculaste anteriormente
+     main = "Histograma de Valores",
+     xlab = "Valores",
+     ylab = "Frecuencia",
+     col = "skyblue",  # Color de las barras
+     border = "black",  # Color del borde de las barras
+     xlim = c(min(new_precios), max(new_precios)))  # Establece el rango en el eje x
+```
+
+```{r}
+new_valores <- new_precios
+# Obtener los valores de las barras del histograma
+counts <- hist(new_valores, breaks = breaks, plot = FALSE)$counts
+
+# Calcular las frecuencias acumuladas a partir de los datos del histograma
+frecuencia_acumulada <- cumsum(counts)
+
+# Crear la ojiva
+plot(breaks[-length(breaks)], frecuencia_acumulada, type = "s", 
+     main = "Ojiva",
+     xlab = "Valores",
+     ylab = "Frecuencia Acumulada",
+     col = "blue")
+
+# Agregar una línea de referencia en el eje x
+abline(h = max(frecuencia_acumulada), col = "red", lty = 2)
+
+# Etiquetar la línea de referencia
+text(25, max(frecuencia_acumulada), "Valor Máximo", pos = 2, col = "red")
+```
+
+```         
+```
+
+# ok
