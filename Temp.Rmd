@@ -216,34 +216,54 @@ text(25, max(frecuencia_acumulada), "Valor Máximo", pos = 2, col = "red")
 ```
 
 ```{r}
-# Calcular las frecuencias de los datos
-frecuencia <- table(new_valores)
+library(readxl)
+Airport_Data_Speeds <- read_excel("[01] Conjunto de datos/Otros/32 - Airport Data Speeds.xlsx")
+Airport_df <- data.frame(Airport_Data_Speeds)
+Airport_df
+```
 
-# Ordenar los datos por frecuencia en orden descendente
-frecuencia_ordenada <- sort(frecuencia, decreasing = TRUE)
+```{r}
+moda <- function(x) {
+  # Crea una tabla de frecuencias para x
+  tabla <- table(x)
+  # Encuentra el valor más frecuente
+  moda <- names(tabla[tabla == max(tabla)])
+  # Devuelve la moda
+  # Si hay más de una moda, devuelve todas
+  if(length(moda) > 1) {
+    return(as.numeric(moda))
+  } else {
+    return(as.numeric(moda))
+  }
+}
+```
 
-# Calcular las frecuencias acumuladas
-frecuencia_acumulada <- cumsum(frecuencia_ordenada)
+```{r}
+sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
+```
 
-# Crear el histograma
-histograma <- hist(new_valores, 
-                   breaks = length(unique(new_valores)), 
-                   plot = FALSE)
+```{r}
+sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
+sapply(Airport_df[, 2:5], median, na.rm = TRUE)
+sapply(Airport_df[, 2:5], moda)
+```
 
-# Crear el gráfico de barras ordenadas
-barplot(frecuencia_ordenada, 
-        main = "Diagrama de Pareto",
-        xlab = "Causas",
-        ylab = "Frecuencia",
-        col = "skyblue",
-        border = "black")
+```{r}
+sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
+```
 
-# Agregar las etiquetas de las causas en el gráfico
-text(barplot(frecuencia_ordenada), frecuencia_ordenada + 1, names(frecuencia_ordenada), pos = 3)
+```{r}
+nombres_companias <- colnames(Airport_df)[2:5]
+nombres_companias
 
-# Agregar una línea de referencia en el eje y (frecuencia acumulada)
-abline(h = frecuencia_acumulada, col = "red", lty = 2)
+# Crear una tabla para las estadísticas utilizando los nombres de las columnas
+estadisticas <- data.frame(
+  
+```
 
-# Etiquetar la línea de referencia
-text(max(barplot(frecuencia_ordenada)), frecuencia_acumulada, "Frecuencia Acumulada", pos = 4, col = "red")
+```{r}
+sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
+```
+
+```{)}
 ```
