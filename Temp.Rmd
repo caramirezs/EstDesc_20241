@@ -215,6 +215,8 @@ abline(h = max(frecuencia_acumulada), col = "red", lty = 2)
 text(25, max(frecuencia_acumulada), "Valor Máximo", pos = 2, col = "red")
 ```
 
+# 1/02/2024
+
 ```{r}
 library(readxl)
 Airport_Data_Speeds <- read_excel("[01] Conjunto de datos/Otros/32 - Airport Data Speeds.xlsx")
@@ -224,22 +226,14 @@ Airport_df
 
 ```{r}
 moda <- function(x) {
-  # Crea una tabla de frecuencias para x
   tabla <- table(x)
-  # Encuentra el valor más frecuente
   moda <- names(tabla[tabla == max(tabla)])
-  # Devuelve la moda
-  # Si hay más de una moda, devuelve todas
   if(length(moda) > 1) {
     return(as.numeric(moda))
   } else {
     return(as.numeric(moda))
   }
 }
-```
-
-```{r}
-sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
 ```
 
 ```{r}
@@ -253,17 +247,29 @@ sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
 ```
 
 ```{r}
-nombres_companias <- colnames(Airport_df)[2:5]
-nombres_companias
+# Calcular moda y asegurar que el resultado sea uniforme
+moda_resultados <- lapply(Airport_df[, 2:5], moda)
+moda_combinada <- sapply(moda_resultados, function(x) {
+  if(length(x) > 1) {
+    paste(x, collapse = ", ")
+  } else {
+    x
+  }
+})
+
 
 # Crear una tabla para las estadísticas utilizando los nombres de las columnas
 estadisticas <- data.frame(
+  Media = sapply(Airport_df[, 2:5], mean, na.rm = TRUE),
+  Mediana = sapply(Airport_df[, 2:5], median, na.rm = TRUE),
+  Moda = moda_combinada
+)
+
+estadisticas
+
   
 ```
 
 ```{r}
-sapply(Airport_df[, 2:5], mean, na.rm = TRUE)
-```
 
-```{)}
 ```
