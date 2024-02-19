@@ -1,0 +1,6 @@
+---
+title: "S04"
+author: "Camilo Ramirez"
+date: "2024-01-29"
+output: word_document
+---

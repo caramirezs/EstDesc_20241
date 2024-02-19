@@ -273,3 +273,47 @@ estadisticas
 ```{r}
 
 ```
+
+# 19/02
+
+```{r}
+library(readxl)
+X32_Airport_Data_Speeds <- read_excel("[01] Conjunto de datos/Otros/32 - Airport Data Speeds.xlsx")
+Airport_df <- data.frame(X32_Airport_Data_Speeds)
+```
+
+```{r}
+install.packages("reshape2")
+install.packages("ggplot2")
+library(reshape2) # o library(tidyr) para pivot_longer
+library(ggplot2)
+
+```
+
+```{r}
+# Transformar los datos a formato largo
+datos_long <- melt(Airport_df, id.vars = 'AIRPORT.CODE', variable.name = 'Company', value.name = 'Speed')
+```
+
+```{r}
+# Crear el diagrama de cajas y bigotes
+ggplot(datos_long, aes(x = Company, y = Speed, fill = Company)) +
+  geom_boxplot(outlier.colour = "red") + # Resaltar los datos atípicos en rojo
+  scale_fill_manual(values = c("VERIZON" = "blue", "SPRINT" = "green", "AT.T" = "yellow", "T.MOBILE" = "purple")) +
+  labs(title = "Boxplot of Internet Speeds by Company with Outliers",
+       x = "Company", y = "Internet Speed (Mbps)") +
+  theme_minimal() # Un tema minimalista
+```
+
+```{r}
+summary(Airport_df$VERIZON)
+```
+
+```{r}
+bp_stats <- boxplot.stats(Airport_df$VERIZON) # Cambia VERIZON por la columna de interés
+
+# Acceder a los resultados
+bp_stats$stats # Estadísticas de la caja: mínimo, Q1, mediana (Q2), Q3, máximo
+bp_stats$out # Valores atípicos
+IQR(Airport_df$VERIZON) # Rango int
+```
