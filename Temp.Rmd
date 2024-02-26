@@ -317,3 +317,94 @@ bp_stats$stats # Estadísticas de la caja: mínimo, Q1, mediana (Q2), Q3, máxim
 bp_stats$out # Valores atípicos
 IQR(Airport_df$VERIZON) # Rango int
 ```
+
+# 26/02: Distribuciones de probabilidad
+
+```{r}
+# Número de lanzamientos
+n <- 10000
+
+# Contadores para cada resultado
+cara_cara <- 0
+cara_cruz <- 0
+cruz_cara <- 0
+cruz_cruz <- 0
+
+# Definir los posibles resultados de un lanzamiento de moneda
+opciones <- c("Cara", "Cruz")
+
+# Realizar n lanzamientos
+for(i in 1:n) {
+  # Simular el lanzamiento de dos monedas
+  lanzamiento <- sample(opciones, size = 2, replace = TRUE)
+  
+  # Actualizar los contadores basados en los resultados
+  if(lanzamiento[1] == "Cara" && lanzamiento[2] == "Cara") {
+    cara_cara <- cara_cara + 1
+  } else if(lanzamiento[1] == "Cara" && lanzamiento[2] == "Cruz") {
+    cara_cruz <- cara_cruz + 1
+  } else if(lanzamiento[1] == "Cruz" && lanzamiento[2] == "Cara") {
+    cruz_cara <- cruz_cara + 1
+  } else if(lanzamiento[1] == "Cruz" && lanzamiento[2] == "Cruz") {
+    cruz_cruz <- cruz_cruz + 1
+  }
+}
+
+# Mostrar los resultados
+n0 <- cruz_cruz
+n1 <- cara_cruz + cruz_cara
+n2 <- cara_cara
+cat('Total de eventos:', n, "\n")
+cat("0: Frecuencias del evento: dos lanzamientos no caiga ninguna cara ", n0, "\n")
+cat("1: Frecuencias del evento: dos lanzamientos caiga solo una cara ", n1, "\n")
+cat("2: Frecuencias del evento: dos lanzamientos caigan dos caras ", n2, "\n")
+
+eventos <- c(0, 1, 2)
+frecuencias <- c(n0, n1, n2)
+media_muestral<- sum(eventos*frecuencias)/n
+varianza_muestral <- sum(frecuencias * (eventos - media_muestral)^2) / (n-1)
+desviacion_estandar_muestral <- sqrt(varianza_muestral)
+cat("media muestral:", media_muestral, "\ndesviacion estandar muestral:", desviacion_estandar_muestral, "\n\n")
+
+
+# Probabilidades
+cat("Probabilidades por aproximación de frecuencias relativas:\n")
+cat("P(0): ", n0/n, "\n")
+cat("P(1): ", n1/n, "\n")
+cat("P(2): ", n2/n, "\n")
+```
+
+```{r}
+n <- 10 
+d <- 5
+p <- 0.5
+sum_prob <- 0
+for(x in d:n) {
+  prob <- choose(n, x) * 0.5^x * (1-0.5)^(n-x)
+  sum_prob <- sum_prob + prob
+  cat("Probabilidad de que exactamente", x, "lanzamientos sean cara: ", prob, "\n")
+}
+cat("Probabilidad de al menos", d, "lanzamientos sean cara: ", sum_prob, "\n")
+```
+
+```{r}
+# Parámetros
+n <- 460
+p <- 0.5
+x <- 252
+
+prob_menos_de <- pbinom(x-1, size = n, prob = p) # P[X<=x]: x éxitos o menos
+1- prob_menos_de
+
+```
+
+```{r}
+print(dbinom(5:10, size=10, prob=0.5))
+print(sum(dbinom(5:10, size=10, prob=0.5)))
+
+```
+
+```{r}
+print(pbinom(5, size=10, prob=0.5)) # P[X<=5]: 5 exitos o menos
+print(pbinom(4, size=10, prob=0.5, lower.tail = FALSE)) # P[X>4] más de 4 éxitos
+```
