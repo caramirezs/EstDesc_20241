@@ -1,0 +1,204 @@
+---
+title: "S05-S06"
+author: "Camilo Ramírez"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+
+```{r}
+n<-8
+p<-0.2
+```
+
+```{r}
+x<-0:n
+probabilidades  <- dbinom(x, n, p)
+# Graficar la función de masa de probabilidad binomial
+barplot(probabilidades, names.arg = x, col = "blue", 
+        main = "Distribución Binomial",
+        xlab = "Número de éxitos", ylab = "Probabilidad", 
+        width = 1, # Ajusta este valor para cambiar el ancho de las barras
+        space = 0)
+
+# Agregar una curva normal para comparación (necesita ajuste debido a la base de barplot)
+media <- n * p
+desviacion <- sqrt(n * p * (1 - p))
+curve(dnorm(x, mean = media, sd = desviacion), add = TRUE, col = "red", lwd = 2, xaxt = "n")
+
+```
+
+```{r}
+prob <- dbinom(7, n, p)
+cat("Probabilidad de que el número x de respuestas correctas sea exactamente 7 \n
+    P(X=7) = ",prob)
+```
+
+```{r}
+op1_prob <- sum(dbinom(4:n, n, p))
+op2_prob <- pbinom(4, n, p, lower.tail = FALSE) + dbinom(4, n, p)
+
+cat("OP1: Probabilidad de que el número x de respuestas correctas sea al menos 4 \n
+    P(X>=4) = ",op1_prob)
+cat("\n----\n")
+cat("OP2: Probabilidad de que el número x de respuestas correctas sea al menos 4 \n
+    P(X>=4) = ",op2_prob)
+```
+
+```{r}
+op1_prob <- sum(dbinom(0:2, n, p))
+op2_prob <- pbinom(3, n, p) - dbinom(3, n, p)
+op3_prob <- pbinom(2, n, p)
+
+cat("OP1: Probabilidad de que el número x de respuestas correctas sea menor que 3 \n
+    P(X<3) = ",op1_prob)
+cat("\n----\n")
+cat("OP2: Probabilidad de que el número x de respuestas correctas sea menor que 3 \n
+    P(X<3) = ",op2_prob)
+cat("\n----\n")
+cat("OP2: Probabilidad de que el número x de respuestas correctas sea menor que 3 \n
+    P(X<3) = ",op3_prob)
+```
+
+```{r}
+op1_prob <- sum(dbinom(0:2, n, p))
+op2_prob <- pbinom(3, n, p) - dbinom(3, n, p)
+op3_prob <- pbinom(2, n, p)
+
+cat("OP1: Probabilidad de que el número x de respuestas correctas no sea mayor que 2 \n
+    P(X<=2) = ",op1_prob)
+cat("\n----\n")
+cat("OP2: Probabilidad de que el número x de respuestas correctas sea menor que 3 \n
+    P(X<=2)) = ",op2_prob)
+cat("\n----\n")
+cat("OP2: Probabilidad de que el número x de respuestas correctas sea menor que 3 \n
+    P(X<=2) = ",op3_prob)
+```
+
+```{r}
+prob <- dbinom(0, n, p)
+cat("Probabilidad de no tener respuestas correctas \n
+    P(X=0) = ",prob)
+```
+
+```{r}
+op1_prob <- sum(dbinom(1:n, n, p))
+op2_prob <- 1 - dbinom(0, n, p)
+op3_prob <- pbinom(0, n, p, lower.tail = FALSE)
+
+cat("OP1: Probabilidad de que al menos una respuesta sea correcta \n
+    P(X>=1) = ",op1_prob)
+cat("\n----\n")
+cat("OP1: Probabilidad de que al menos una respuesta sea correcta \n
+    P(X>=1) = ",op2_prob)
+cat("\n----\n")
+cat("OP1: Probabilidad de que al menos una respuesta sea correcta \n
+    P(X>=1) = ",op3_prob)
+```
+
+```{r}
+n<-90
+p<-0.27
+x<-0:n
+probabilidades  <- dbinom(x, n, p)
+# Graficar la función de masa de probabilidad binomial
+barplot(probabilidades, names.arg = x, col = "blue", 
+        main = "Distribución Binomial",
+        xlab = "Número de éxitos", ylab = "Probabilidad", 
+        width = 1, # Ajusta este valor para cambiar el ancho de las barras
+        space = 0)
+
+# Agregar una curva normal para comparación (necesita ajuste debido a la base de barplot)
+media <- n * p
+desviacion <- sqrt(n * p * (1 - p))
+curve(dnorm(x, mean = media, sd = desviacion), add = TRUE, col = "red", lwd = 2, xaxt = "n")
+```
+
+```{r}
+prob  <- pbinom(7, n, p)
+cat("Probabilidad de obtener 7 o menos minorías 
+    P(X<=7) = ",prob)
+```
+
+```{r}
+media <- n*p
+var <- n*p*(1-p)
+desvest <- sqrt(var)
+
+cat("media: ", media, "\n", "desviación estándar: ", desvest)
+```
+
+```{r}
+sig_altos <- media + 2*desvest
+sig_bajo <- media - 2*desvest
+
+cat("los resultados significativamente bajos deben ser menor o igual a: ", sig_bajo, "\n", "los resultados significativamente bajos deben ser mayor o igual a: ", sig_altos)
+```
+
+```{r}
+n<-20
+p<-0.79
+x<-0:n
+probabilidades  <- dbinom(x, n, p)
+# Graficar la función de masa de probabilidad binomial
+barplot(probabilidades, names.arg = x, col = "blue", 
+        main = "Distribución Binomial",
+        xlab = "Número de éxitos", ylab = "Probabilidad", 
+        width = 1, # Ajusta este valor para cambiar el ancho de las barras
+        space = 0)
+
+# Agregar una curva normal para comparación (necesita ajuste debido a la base de barplot)
+media <- n * p
+desviacion <- sqrt(n * p * (1 - p))
+curve(dnorm(x, mean = media, sd = desviacion), add = TRUE, col = "red", lwd = 2, xaxt = "n")
+```
+
+```{r}
+prob  <- pbinom(19, n, p)
+cat("Probabilidad de obtener 19 o más 
+    P(X<=19) = ",prob)
+```
+
+```{r}
+media <- n*p
+var <- n*p*(1-p)
+desvest <- sqrt(var)
+
+cat("media: ", media, "\n", "desviación estándar: ", desvest)
+
+sig_altos <- media + 2*desvest
+sig_bajo <- media - 2*desvest
+
+cat("los resultados significativamente bajos deben ser menor o igual a: ", sig_bajo, "\n", "los resultados significativamente bajos deben ser mayor o igual a: ", sig_altos)
+```
+
+```{r}
+n<-6
+p<-0.2
+x<-0:n
+probabilidades  <- dbinom(x, n, p)
+# Graficar la función de masa de probabilidad binomial
+barplot(probabilidades, names.arg = x, col = "blue", 
+        main = "Distribución Binomial",
+        xlab = "Número de éxitos", ylab = "Probabilidad", 
+        width = 1, # Ajusta este valor para cambiar el ancho de las barras
+        space = 0)
+
+# Agregar una curva normal para comparación (necesita ajuste debido a la base de barplot)
+media <- n * p
+desviacion <- sqrt(n * p * (1 - p))
+curve(dnorm(x, mean = media, sd = desviacion), add = TRUE, col = "red", lwd = 2, xaxt = "n")
+```
+
+```{r}
+prob  <- dbinom(5, n, p)
+cat("Probabilidad de obtener exactamente 5 
+    P(X=5) = ",prob)
+```
+
+```{r}
+prob  <- dbinom(6, n, p)
+cat("Probabilidad de obtener exactamente 6
+    P(X=6) = ",prob)
+```
+
