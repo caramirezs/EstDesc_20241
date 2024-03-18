@@ -1,0 +1,142 @@
+---
+title: "P01"
+author: "Camilo Ramírez"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+# P1
+
+```{r}
+library(readr)
+laptops <- read_csv("laptops.csv")
+laptops_df <- data.frame(laptops)
+View(laptops_df)
+```
+
+## 1 Análisis descriptivo
+
+```{r}
+pro_tier <- table(laptops_df$processor_tier)
+
+library("RColorBrewer")
+
+barplot(pro_tier, main="Tipo de viviendas en NY", 
+        xlab="Type", ylab="Número de viviendas", las=2,
+        cex.names=0.7, cex.lab=0.9, cex.main=0.9, col=rainbow(7), horiz = F, 
+        xpd = TRUE)
+
+```
+
+## 2
+```{r}
+price_column <- laptops_df$Price
+n <- length(price_column)
+media <- mean(price_column)
+varianza <- sum((price_column - media)^2)/(n - 1)
+desv_estandar <- sqrt(varianza)
+media
+desv_estandar
+
+```
+```{r}
+sd(price_column)
+```
+```{r}
+boxplot(price_column)
+```
+
+```{r}
+ boxplot.stats(price_column)
+```
+# 2
+
+```{r}
+brand_column <- laptops_df$brand
+table(brand_column)
+```
+```{r}
+sort(table(brand_column), decreasing=TRUE)
+```
+
+# 3
+```{r}
+n <- 3655+7005+4403+3040
+
+
+# 1
+cat('1. ---\n')
+#P(usar cinturon)
+(3665+7005)/n
+
+
+# 2
+cat('2. ---\n')
+# P(no morir)
+(7005 + 3040)/n
+
+# 3
+cat('3. ---\n')
+#P(usar cinturon o morri)
+(3665+7005)/n + (3665+4402)/n - (3665)/n
+(4402 + 3665 + 7005)/n
+
+# 4
+cat('4. ---\n')
+#P(usar cinturon y morir)
+(3665)/n
+cat('---\n')
+
+# 5 
+# sin reemplazo
+cat('5. ---\n')
+(3665+7005)/n * (3665+7005 - 1)/(n - 1)
+
+# 6
+# con reemplazo
+cat('6. ---\n')
+((3655 + 4402)/n)^2
+
+# 7 
+# sin reemplazo
+cat('7. ---\n')
+(7005 + 3040)/n * (7005 + 3040 - 1)/(n - 1) * (7005 + 3040 - 1)/(n - 1)
+```
+
+# 4
+
+```{r}
+n <- 80
+p <- 0.7
+
+
+# 1
+cat('1. ---\n')
+#P(X=53)
+dbinom(53, n, p)
+
+# 2
+cat('2. ---\n')
+#P(X>=71)
+pbinom(70, n, p, lower.tail = FALSE)
+sum(dbinom(71:n, n, p))
+
+# 3
+cat('3. ---\n')
+mean <- n * p
+stand_d <- sqrt(n * p * (1 - p))
+
+#interbalo
+lin_inf <- mean - stand_d
+lin_sup <- mean + stand_d
+cat('Límites del interbalo', lin_inf, lin_sup, '\n')
+cat('solo 10 de ellos es un número significativamente bajo (muy bajo)\n')
+pbinom(10, n, p)
+
+# 4
+cat('4. ---\n')
+lin_inf <- mean - stand_d
+lin_sup <- mean + stand_d
+cat('Límites del interbalo', lin_inf, lin_sup, '\n')
+
+```
