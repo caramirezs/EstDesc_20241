@@ -610,3 +610,60 @@ prob  <- dbinom(6, n, p)
 cat("Probabilidad de obtener exactamente 6
     P(X=6) = ",prob)
 ```
+```{r}
+# Inicializar el contador de veces que el resultado es menor que 3
+sum_porcentaje <- 0
+contador_total <- 0
+ciclos <- 500
+lanzamientos <- 50
+resultados <- c()
+
+# Ciclo externo para repetir el proceso 100 veces
+for (j in 1:ciclos) {
+  # Inicializar el contador para cada iteración
+  contador <- 0
+  
+  # Ciclo interno para simular el lanzamiento del dado
+  for (i in 1:lanzamientos) {
+    # Simulación del lanzamiento de un dado d6
+    resultado <- sample(1:6, 1)
+    
+    # Incrementar el contador si el resultado es menor que 3
+    if (resultado < 3) {
+      contador <- contador + 1
+    }
+  }
+  porcentaje <- contador/lanzamientos
+  sum_porcentaje <- sum_porcentaje + porcentaje
+  #cat(j,'/',ciclos, ' : número de lanzamientos menores que 3: ', contador)
+  #cat(' (',porcentaje,')\n')
+  resultados <- append(resultados, porcentaje)
+  
+  
+  # Sumar al contador total
+  contador_total <- contador_total + contador
+}
+media_porcentajes <- sum_porcentaje/ciclos
+# Imprimir el resultado total
+cat(media_porcentajes, '\n')
+
+```
+```{r}
+# Instalar el paquete ggplot2 si aún no lo tienes instalado
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2")
+}
+
+# Cargar el paquete ggplot2
+library(ggplot2)
+
+# Crear un histograma con los resultados
+histograma <- ggplot(data.frame(Resultados = resultados), aes(x = Resultados)) +
+  geom_histogram(bins = 20, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histograma de resultados", x = "Resultado", y = "Frecuencia") +
+  theme_minimal()
+
+# Mostrar el histograma
+print(histograma)
+```
+
